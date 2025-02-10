@@ -8,16 +8,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> scoreKeeper = const [
-    Icon(
+  //List for the questions
+  List<String> questions= const [
+    '这个世界又蠢又笨。',
+    '外面的人足够聪明，能够理解复杂性。',
+    '我讨厌所有人。',
+  ];
+  //List for the scoreboard
+  List<Widget> scoreKeeper =  [
+    const Icon(
       Icons.check,
       color: Colors.green,
      ),
-    Icon(
+    const Icon(
       Icons.close,
       color: Colors.red,
      ),
   ];
+  //Creating a tracker to track the question number
+  var questionNumber = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,11 +50,11 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Expanded(
+               Expanded(
                 child: Center(
                   child: Text(
-                    'QUESTION',
-                    style: TextStyle(
+                    questions[questionNumber],
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 67, 191, 212),
                       fontSize: 20,
                     ),
@@ -64,13 +73,18 @@ class _HomePageState extends State<HomePage> {
                       minimumSize: const Size(10, 10),
                     ),
                     onPressed: () {
-                      scoreKeeper.add(
-                        const Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ),
-                      );
-                    },
+                      setState(() {
+                      //   scoreKeeper.add(
+                      //   const Icon(
+                      //     Icons.check,
+                      //     color: Colors.green,
+                      //   ),
+                      // );
+                      if(questionNumber < questions.length - 1){
+                        questionNumber++;
+                       }
+                    });
+                  },
                     child: const Text(
                       'TRUE',
                       style: TextStyle(color: Colors.black),
@@ -87,13 +101,18 @@ class _HomePageState extends State<HomePage> {
                       minimumSize: const Size(10, 10),
                     ),
                     onPressed: () {
-                      scoreKeeper.add(
-                        const Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ),
-                      );
-                    },
+                      setState(() {
+                      //   scoreKeeper.add(
+                      //   const Icon(
+                      //     Icons.close,
+                      //     color: Colors.red,
+                      //   ),
+                      // );
+                      if(questionNumber < questions.length - 1){
+                        questionNumber++;
+                       }
+                    });
+                  },
                     child: const Text(
                       'FALSE',
                       style: TextStyle(color: Colors.black),
