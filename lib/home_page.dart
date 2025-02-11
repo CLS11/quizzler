@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'questions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,11 +10,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   //List for the questions
-  List<String> questions= const [
-    '这个世界又蠢又笨。',
-    '外面的人足够聪明，能够理解复杂性。',
-    '我讨厌所有人。',
-  ];
+  // List<String> questions= const [
+  //   '这个世界又蠢又笨。',
+  //   '外面的人足够聪明，能够理解复杂性。',
+  //   '我讨厌所有人。',
+  // ];
   //List for the scoreboard
   List<Widget> scoreKeeper =  [
     const Icon(
@@ -26,13 +27,19 @@ class _HomePageState extends State<HomePage> {
      ),
   ];
   //List for checking user's answers
-  List<bool> answers = [
-    true, 
-    false, 
-    true,
-    ];
+  // List<bool> answers = [
+  //   true, 
+  //   false, 
+  //   true,
+  //   ];
   //Creating a tracker to track the question number
   var questionNumber = 0;
+  //List for the questions using questions class
+  List<Questions> questionBank = [
+    Questions(q: '这个世界又蠢又笨。',a: true), 
+    Questions(q: '外面的人足够聪明，能够理解复杂性。',a: false),
+    Questions(q: '我讨厌所有人。', a: true),
+    ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                Expanded(
                 child: Center(
                   child: Text(
-                    questions[questionNumber],
+                    questionBank[questionNumber].questionText,
                     style: const TextStyle(
                       color: Color.fromARGB(255, 67, 191, 212),
                       fontSize: 20,
@@ -79,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                       minimumSize: const Size(10, 10),
                     ),
                     onPressed: () {
-                      bool correctAnswer = answers[questionNumber];
+                      bool correctAnswer = questionBank[questionNumber].questionAnswer;
                       setState(() {
                       //   scoreKeeper.add(
                       //   const Icon(
@@ -87,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                       //     color: Colors.green,
                       //   ),
                       // );
-                      if(questionNumber < questions.length - 1){
+                      if(questionNumber < questionBank.length - 1){
                         questionNumber++;
                        }
                     });
@@ -108,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                       minimumSize: const Size(10, 10),
                     ),
                     onPressed: () {
-                      bool correctAnswer = answers[questionNumber];
+                      bool correctAnswer = questionBank[questionNumber].questionAnswer;
                       setState(() {
                       //   scoreKeeper.add(
                       //   const Icon(
@@ -116,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                       //     color: Colors.red,
                       //   ),
                       // );
-                      if(questionNumber < questions.length - 1){
+                      if(questionNumber < questionBank.length - 1){
                         questionNumber++;
                        }
                     });
