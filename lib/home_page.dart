@@ -25,6 +25,12 @@ class _HomePageState extends State<HomePage> {
       color: Colors.red,
      ),
   ];
+  //List for checking user's answers
+  List<bool> answers = [
+    true, 
+    false, 
+    true,
+    ];
   //Creating a tracker to track the question number
   var questionNumber = 0;
   @override
@@ -73,6 +79,7 @@ class _HomePageState extends State<HomePage> {
                       minimumSize: const Size(10, 10),
                     ),
                     onPressed: () {
+                      bool correctAnswer = answers[questionNumber];
                       setState(() {
                       //   scoreKeeper.add(
                       //   const Icon(
@@ -101,6 +108,7 @@ class _HomePageState extends State<HomePage> {
                       minimumSize: const Size(10, 10),
                     ),
                     onPressed: () {
+                      bool correctAnswer = answers[questionNumber];
                       setState(() {
                       //   scoreKeeper.add(
                       //   const Icon(
