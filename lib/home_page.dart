@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'questions.dart';
+import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+
+QuizBrain quizBrain = QuizBrain();
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,38 +13,52 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //List for the questions
-  // List<String> questions= const [
-  //   '这个世界又蠢又笨。',
-  //   '外面的人足够聪明，能够理解复杂性。',
-  //   '我讨厌所有人。',
-  // ];
   //List for the scoreboard
   List<Widget> scoreKeeper =  [
-    const Icon(
-      Icons.check,
-      color: Colors.green,
-     ),
-    const Icon(
-      Icons.close,
-      color: Colors.red,
-     ),
+    // const Icon(
+    //   Icons.check,
+    //   color: Colors.green,
+    //  ),
+    // const Icon(
+    //   Icons.close,
+    //   color: Colors.red,
+    //  ),
   ];
-  //List for checking user's answers
-  // List<bool> answers = [
-  //   true, 
-  //   false, 
-  //   true,
-  //   ];
-  //Creating a tracker to track the question number
-  var questionNumber = 0;
-  //List for the questions using questions class
-  List<Questions> questionBank = [
-    Questions(q: '这个世界又蠢又笨。',a: true), 
-    Questions(q: '外面的人足够聪明，能够理解复杂性。',a: false),
-    Questions(q: '我讨厌所有人。', a: true),
-    ];
-  @override
+
+  void checkAnswer(bool userPickedAnswer){
+    
+    bool correctAnswer = quizBrain.getCorrectAnswer();
+
+    setState((){
+      if(quizBrain.isFinished() == true){
+        Alert(
+          context: context,
+          title: 'Finished!',
+          desc: 'End of the quiz',
+        ).show();
+        quizBrain.reset();
+        scoreKeeper = [];
+      } else {
+        if(userPickedAnswer == correctAnswer){
+          scoreKeeper.add(
+            const Icon (
+              Icons.check,
+              color: Colors.green,
+            )
+          );
+        } else {
+          scoreKeeper.add(
+            const Icon(
+              Icons.close,
+              color: Colors.red,
+            )
+          );
+        }
+      }
+      quizBrain.nextQuestion();
+    });
+  }
+  
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -66,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                Expanded(
                 child: Center(
                   child: Text(
-                    questionBank[questionNumber].questionText,
+                    quizBrain.getQuestionText(),
                     style: const TextStyle(
                       color: Color.fromARGB(255, 67, 191, 212),
                       fontSize: 20,
@@ -83,21 +101,9 @@ class _HomePageState extends State<HomePage> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
-                      minimumSize: const Size(10, 10),
                     ),
                     onPressed: () {
-                      bool correctAnswer = questionBank[questionNumber].questionAnswer;
-                      setState(() {
-                      //   scoreKeeper.add(
-                      //   const Icon(
-                      //     Icons.check,
-                      //     color: Colors.green,
-                      //   ),
-                      // );
-                      if(questionNumber < questionBank.length - 1){
-                        questionNumber++;
-                       }
-                    });
+                      checkAnswer(true);
                   },
                     child: const Text(
                       'TRUE',
@@ -112,21 +118,9 @@ class _HomePageState extends State<HomePage> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
-                      minimumSize: const Size(10, 10),
                     ),
                     onPressed: () {
-                      bool correctAnswer = questionBank[questionNumber].questionAnswer;
-                      setState(() {
-                      //   scoreKeeper.add(
-                      //   const Icon(
-                      //     Icons.close,
-                      //     color: Colors.red,
-                      //   ),
-                      // );
-                      if(questionNumber < questionBank.length - 1){
-                        questionNumber++;
-                       }
-                    });
+                      checkAnswer(false);
                   },
                     child: const Text(
                       'FALSE',
