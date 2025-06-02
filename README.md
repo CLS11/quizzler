@@ -1,5 +1,20 @@
-# QUIZZLER
+# Quizzler
 
-A minimilistic quiz app to explore the different features of flutter.
+A Flutter-based quiz app that tests your knowledge with multiple-choice questions. Fun, interactive, and easy to use!
 
-This app is a part of learning on going in the venture of flutter bootcamp.
+---
+
+## Features
+
+- Multiple-choice questions  
+- Instant feedback on answers  
+- Progress tracking through the quiz  
+- Simple, clean UI  
+
+---
+
+## Tech Stack
+
+- Flutter & Dart  
+- Stateful widgets for quiz logic and UI updates  
+
